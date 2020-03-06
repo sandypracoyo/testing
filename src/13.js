@@ -24,24 +24,24 @@ function total(arr = []) {
 }
 
 function mode(arr = []) {
-    const map = new Map()
-    const numbers = []
-
-    arr.forEach(x => {
-        if (map.get(x)) {
-            map.set(x, map.get(x) + 1)
-        } else {
-            map.set(x, 1)
+    const temp = arr.map(x => {
+        return {
+            number: x,
+            count: arr.filter(y => x == y).length
         }
     })
 
-    for (const [key, value] of map) {
-        if (value == Math.max(...Array.from(map.values()))) {
-            numbers.push(key)
-        }
-    }
+    const max = temp.map(x => x.count)
 
-    return numbers.join(", ") + ", each appeared " + Math.max(...Array.from(map.values())) + " times"
+    const numbers = temp.filter(x => {
+        return x.count == Math.max(...max)
+    }).map(x => {
+        return x.number
+    })
+
+    const set = [...new Set(numbers)]
+
+    return set.join(", ") + ", each appeared " + Math.max(...max) + " times"
 }
 
 module.exports = obj
